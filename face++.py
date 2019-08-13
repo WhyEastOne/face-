@@ -83,17 +83,19 @@ if __name__ == '__main__':
                 
                 cv2.rectangle(frame, (x - 10, y - 10), (x + w + 10, y + h + 10), color, thickness = 2)
                 
+                label = 'unkonwn' #初始化为未知
                 for i in range(0, len(results)):
                     if results[i] == True:
-                        #文字提示是谁
-                        cv2.putText(frame,'%s'%labels[i], 
-                                    (x + 30, y + 30),                      #坐标
-                                    cv2.FONT_HERSHEY_SIMPLEX,              #字体
-                                    1,                                     #字号
-                                    (255,0,255),                           #颜色
-                                    2)
-                        break #由于循环匹配，匹配成功不跳出循环会导致识别的另一个文字显示在图像上造成文字重叠
-                    
+                        label = labels[i] #若是匹配成功，赋值为该标签
+                        break
+                
+                #文字提示是谁
+                cv2.putText(frame,'%s'%label, 
+                            (x + 30, y + 30),                      #坐标
+                            cv2.FONT_HERSHEY_SIMPLEX,              #字体
+                            1,                                     #字号
+                            (255,0,255),                           #颜色
+                            2)
         cv2.imshow("Recognize Me !!!", frame) #不要显示中文，否则窗口标题显示乱码
         
         #等待10毫秒看是否有按键输入
